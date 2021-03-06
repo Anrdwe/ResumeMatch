@@ -1,91 +1,127 @@
 // import logo from "./logo.svg"
 import "./App.css"
-import React, {useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
+import { Pagination } from "@material-ui/lab"
 
-import { TextField } from "@material-ui/core"
-
-import Upload from './components/upload/upload-component'
-import PostingsSection from './components/postingsSection/postingsSection'
-import DetailedPosting from './components/detailedPosting/detailedPosting-component'
+import Upload from "./components/upload/upload-component"
+import PostingsSection from "./components/postingsSection/postingsSection"
+import DetailedPosting from "./components/detailedPosting/detailedPosting-component"
+import Filter from "./components/filter/filter-component"
 
 function App() {
+    let samplePosting = {
+        companyname: "Amazon",
+        descrip: `<div class="jobsearch-jobDescriptionText" id="jobDescriptionText"><div>Provides data collection, data management, data analysis and reporting, and decision management tool design and development. Responsible for interfacing with IT to ensure utilization and effective use of IT sponsored tools. Provide basic programming and technical skills to support data management and reporting requirements.
+        <ul><li>Work with designated department to assess, define, and develop report deliverables to meet internal and customer requirements. Design appropriate data repository and reporting tools that will be used to organize, analyze, and report data. Query databases to extract information needed to develop reports. Compile data and other information from multiple data sources.
+        </li><li>Support the development of standardized reports.
+        </li><li>Interpret, analyze and provide recommendations regarding data accuracy and data collection needs and processes. Work with business unit(s) to identify opportunities to enhance existing and to develop new data information processes and tools. Continuously assess and improve data collection and reporting processes.
+        </li><li>Coordinate or independently complete special projects. Assist staff members with more complex and detailed projects including root cause analyses, trended reporting and analyses which support continuous quality improvement leading to actionable information.
+        </li><li>Participate and support staff training related to data collection and reporting.
+        </li><li>Other duties as assigned.
+        </li><li>Uses MS SQL / SSIS and SAS to load, validate, and report on client data. Also performs ad-hoc database analyses to generate reports based on provided criteria.
+        </li><li>Enhance existing systems by analyzing business objectives, developing an action plan and identifying areas for improvement.
+        </li><li>Experience with Microsoft SQL Server and / or Oracle is required.
+        </li><li>Experience working within Health Care data environment preferred.
+        </li></ul><p></p><p>#LI-KB1
+        </p><p></p><p><b>Other Job Requirements
+        </b></p><p></p><p><b>Responsibilities
+        </b></p><ul><li>Bachelor's degree in Business Administration, Computer Science, IT, Mathematics or related field.
+        </li><li>May consider an additional 3-4 years of relevant experience in lieu of Bachelor's degree.
+        </li><li>Requires strong expertise in MS Excel and relational database such as MS Access and other database management (MS SQL) and reporting tools.
+        </li><li>Ability to use reporting software such as Actuate, Cognos, Crystal reports, SAS, or other.
+        </li><li>Ability to query the company's data warehouse and/or department systems in response to data requests.
+        </li><li>Strong interpersonal skills.
+        </li><li>Strong written and verbal communication skills.
+        </li></ul><ul><li>Database management.
+        </li><li>Exposure to web based or mobile application development.
+        </li></ul><p></p><p><b>General Job Information
+        </b></p><p></p><p><b>Title
+        </b></p>SQL ETL and Reporting Analyst
+        <p></p><p><b>Grade
+        </b></p>23
+        <p></p><p><b>Work Experience
+        </b></p>Analytics/Informatics, Managed Healthcare
+        <p></p><p><b>Education
+        </b></p>A Combination of Education and Work Experience May Be Considered. (Required), Bachelors: Business Administration (Required), Bachelors: Computer and Information Science (Required), Bachelors: Information Technology (Required), Bachelors: Mathematics (Required)
+        <p></p><p><b>License and Certifications - Required
+        </b></p><p></p><p><b>License and Certifications - Preferred
+        </b></p><p></p><p>Magellan Health Services is proud to be an Equal Opportunity Employer and a Tobacco-free workplace. EOE/M/F/Vet/Disabled. Every employee must understand, comply and attest to the security responsibilities and security controls unique to their position.</p></div></div>`,
+        jobkey: "amazon",
+        jobname: "Software Developer Engineer",
+        basicreq: `Knowledge of Perl or other scripting languages a plus, Experience with distributed (multi-tiered) systems, algorithms and relational databases,Experience in optimization mathematics (linear programming, nonlinear optimization),Ability to effectively articulate technical challenges and solutions`,
+        bonusreq: "Previous technical internship(s) preferred",
+        location: "Toronto, ON",
+        salary: "28$/hr",
+        url: "indeed.com",
+        grade: "0.75",
+    }
+    let samplePostings = []
 
-    const [jobPostings, setJobPostings] = useState([]);
-    const [selectedJob, setSelectedJob] = useState(null);
+    for (let i = 0; i < 14; i++) {
+        samplePostings.push(samplePosting)
+    }
 
-    useEffect(()=>{
+    const [jobPostings, setJobPostings] = useState(samplePostings)
+    const [selectedJob, setSelectedJob] = useState(null)
+    const [displayableJobs, setDisplayableJobs] = useState([])
 
-        setJobPostings([
-            {
-'title': 'Job title',
-'description':`Job Description:
+    const [filterGrade, setFilterGrade] = React.useState("")
+    const [filterDistance, setFilterDistance] = React.useState("")
+    const [filterSalary, setFilterSalary] = React.useState(0)
 
-Note: By applying to this position your application is automatically submitted to the following locations: Waterloo, ON, Canada; Montreal, QC, Canada
-Minimum qualifications:
+    const [pageNumber, setPageNumber] = useState(1)
 
-Bachelor's degree in Computer Science or related technical field, or equivalent practical experience.
-Experience working with Data Structures or Algorithms (e.g., data structures/algorithms class, coursework/projects, research, internships, or other practical experience in/outside of school or work (including open source hobby coding).
-Software development experience coding in a general purpose programming language.
-Examples of coding in one of the following programming languages including but not limited to: C, C++, Java, JavaScript or Python.
+    const numJobsPerPage = 6
 
-Remote interview process
-Virtual meetings`,
-'location':'Montreal, Qc',
-'salary': '28$/hr'
-            },
-            {
-'title': 'Second Job',
-'description':`
+    useEffect(() => {
+        // TODO: use filters to update displayable jobs
+        setDisplayableJobs(jobPostings)
+    }, [jobPostings])
 
-This position could be located in Montreal or Toronto depending on candidate's preference.
+    function onJobSelect(idx) {
+        setSelectedJob(jobPostings[idx])
+    }
 
-We’re scaling up our algorithmic trading operations and looking for candidates with software development and/or quantitative backgrounds. We sit at the intersection of technology and f
-
-inance, elaborating and implementing novel ways to leverage technology in our automated trading activities.
-
-We’re a small team where each person wears many hats. We rely strongly on software and automation to achieve the kind of impact we’re known for. We pride ourselves on making data-driven decisions and thrive on seeing the immediate impact of those decisions every day.
-
-What you might do in a typical day
-
-Iteratively test and improve the real-time pricing strategy of a particular asset type
-Compare merits of different technical approaches and choose which one to use
-Evaluate how the latency from geographical topology affects local strategy perspective
-The traits that will make you successful in our team
-
-Independent, creative, accountable
-Foresee, investigate and fix problems with a logical, systematic, and practical approach
-Deliver functionality now while working on long-term technical goals`
-            },
-        ])
-
-    },[] );
-
-    function onJobSelect (idx) {
-        setSelectedJob(jobPostings[idx]);
+    function onPageSelect(event, pageNum) {
+        setPageNumber(pageNum)
     }
 
     return (
         <div>
-            <div className="title">Resume Match</div>
-            <div className="search-section">
-                <form className="searchForm" noValidate autoComplete="off">
-                    <TextField className="textBox" id="job" label="Job" />
-                    <TextField className="textBox" id="location" label="Location" />
-                    <TextField className="textBox" id="grader" label="Grade" />
-                </form>
-                <Upload/>
+            <div className="titleBox">
+                <span className="title">Resume Match</span>
             </div>
-            {/* <Parser></Parser> */}
+            <Upload setJobPostings={setJobPostings} />
+            <Filter
+                filterGrade={filterGrade}
+                filterDistance={filterDistance}
+                filterSalary={filterSalary}
+                setFilterGrade={setFilterGrade}
+                setFilterDistance={setFilterDistance}
+                setFilterSalary={setFilterSalary}
+                setDisplayableJobs={setDisplayableJobs}
+                displayableJobs={displayableJobs}
+                jobPostings={jobPostings}
+            ></Filter>
             <div className="main">
-                <div className='display-postings-section'>
-                    <PostingsSection jobs={jobPostings} onJobSelect={onJobSelect} />
+                <div className="display-data">
+                    <div className="display-postings-section">
+                        <PostingsSection
+                            onJobSelect={onJobSelect}
+                            displayableJobs={displayableJobs}
+                            pageNumber={pageNumber}
+                            numJobsPerPage={numJobsPerPage}
+                        />
+                    </div>
+                    <div className="display-job-section">
+                        <DetailedPosting job={selectedJob} />
+                    </div>
                 </div>
-                <div className='display-job-section'>
-                    <DetailedPosting job={selectedJob} />
-                </div>
-            </div>
-            <div className="sortingBox">
-                <Parser></Parser>
+                <Pagination
+                    onChange={onPageSelect}
+                    count={displayableJobs.length > 0 ? Math.ceil(displayableJobs.length / numJobsPerPage) : 1}
+                    shape="rounded"
+                />
             </div>
         </div>
     )

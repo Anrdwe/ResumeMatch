@@ -1,38 +1,63 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-.main{
+.main {
     max-width: 1280px;
-    margin:auto;
+    margin: auto;
+    margin-bottom: 2rem;
     padding: 0 2rem;
+    /* display: flex;
+    align-items: stretch; */
+}
+
+.display-data {
     display: flex;
     align-items: stretch;
 }
 
-.display-postings-section{
+.display-postings-section {
     flex-basis: 50%;
     flex-grow: 1;
 }
 
-.display-job-section{
+.display-job-section {
     margin-left: 1rem;
     flex-basis: 40%;
-    flex-grow:1;
+    flex-grow: 1;
 }
 
-.title {
-    margin: 30px;
-    text-align: center;
-    font-size: 30px !important;
-    font-weight: 600;
+.MuiPagination-root {
+    margin-top: 2rem;
+}
+
+.MuiPagination-ul {
+    justify-content: center;
 }
 
 .searchForm {
     text-align: center;
 }
 
+.titleBox {
+    margin: auto;
+    background-color: #3f51b5;
+    height: 60px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.title {
+    margin-left: 2%;
+    font-size: 30px !important;
+    font-weight: 600;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+}
+
 .textBox {
+    width: 300px;
     margin: 10px !important;
 }
 
@@ -47,8 +72,18 @@ input[type="file"] {
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
+    border-radius: 5px;
+    border-color: #3f51b5;
+}
+
+.fileUploadLabel:hover {
+    background-color: white;
 }
 
 .sortingBox {
     text-align: center;
+}
+
+body {
+    background-color: whitesmoke;
 }

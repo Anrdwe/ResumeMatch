@@ -1,5 +1,5 @@
 import React from "react"
-import "./parser-component.css"
+import "./filter-component.css"
 
 import {
     FormControl,
@@ -13,11 +13,11 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        margin: theme.spacing(2),
-        minWidth: 120,
+        margin: theme.spacing(3),
+        minWidth: 160,
     },
     selectEmpty: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(3),
     },
     salarySlider: {
         width: 200,
@@ -44,23 +44,45 @@ function valuetext(value) {
     return `${value}k`
 }
 
-function Parser() {
+function Filter({
+    filterGrade,
+    filterDistance,
+    filterSalary,
+    setFilterGrade,
+    setFilterDistance,
+    setFilterSalary,
+    setDisplayableJobs,
+    displayableJobs,
+    jobPostings,
+}) {
     const classes = useStyles()
 
-    const [grade, setGrade] = React.useState("")
-    const [distance, setDistance] = React.useState("")
-    const [salary, setSalary] = React.useState(0)
-
     const handleGradeChange = (event) => {
-        setGrade(event.target.value)
+        setFilterGrade(event.target.value)
+        let currentJobs
+        if (displayableJobs.length > 0) {
+            currentJobs = displayableJobs
+        } else {
+            currentJobs = jobPostings
+        }
+        setDisplayableJobs(
+            currentJobs.filter((job) => job.grade >= event.target.value)
+        )
     }
 
     const handleDistanceChange = (event) => {
-        setDistance(event.target.value)
+        setFilterDistance(event.target.value)
     }
 
     const handleSalaryChange = (event, newSalary) => {
-        setSalary(newSalary)
+        setFilterSalary(newSalary)
+        let currentJobs
+        if (displayableJobs.length > 0) {
+            currentJobs = displayableJobs
+        } else {
+            currentJobs = jobPostings
+        }
+        setDisplayableJobs(currentJobs.filter((job) => job.salary >= newSalary))
     }
 
     return (
@@ -71,7 +93,7 @@ function Parser() {
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={grade}
+                        value={filterGrade}
                         onChange={handleGradeChange}
                     >
                         <MenuItem value={60}>60%+</MenuItem>
@@ -87,7 +109,7 @@ function Parser() {
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={distance}
+                        value={filterDistance}
                         onChange={handleDistanceChange}
                     >
                         <MenuItem value={5}>within 5 km</MenuItem>
@@ -106,7 +128,7 @@ function Parser() {
                         step={10}
                         marks={marks}
                         valueLabelDisplay="on"
-                        value={salary}
+                        value={filterSalary}
                         onChange={handleSalaryChange}
                     />
                 </div>
@@ -115,4 +137,4 @@ function Parser() {
     )
 }
 
-export default Parser
+export default Filter

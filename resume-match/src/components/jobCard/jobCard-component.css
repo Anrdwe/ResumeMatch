@@ -1,23 +1,40 @@
-.card-border{
-    border: 1px rgba(22, 158, 233, 0.6) solid;
-    border-radius: 1rem;
+.card-border {
+    /* border: 1px rgba(22, 158, 233, 0.6) solid; */
+    border-radius: 10px;
     margin-bottom: 1rem;
-    padding:1rem;
+    padding: 1rem;
     transition: box-shadow 0.3s;
     transition-timing-function: ease-out;
+    max-height: 15rem;
+    overflow-y: hidden;
 }
 
-.card-border:hover{
+.card-border:hover {
     cursor: pointer;
-    box-shadow: 3px 6px 4px rgba(22, 158, 233, 0.2);
+    box-shadow: 2px 3px 6px 4px rgba(22, 158, 233, 0.2);
     transition: box-shadow 0.3s;
     transition-timing-function: ease-out;
 }
 
-.description{
+.description {
     white-space: pre-wrap;
 }
 
-.job-title{
+.display-list{
+    overflow-x: hidden;
+}
+
+.job-title {
     margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.jobTitleArea {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list{
+    display:flex;
+    justify-content: space-between;
 }

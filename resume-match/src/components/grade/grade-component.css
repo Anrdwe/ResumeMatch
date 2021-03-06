@@ -1,0 +1,17 @@
+.grade {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #35ca98;
+}
+
+.great{
+    color: #35ca98;
+}
+
+.medium{
+    color: #ADD22D;
+}
+
+.bad{
+    color: #C1573E;
+}
